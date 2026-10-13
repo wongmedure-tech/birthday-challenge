@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bintang's Best Friend Challenge</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#050b12;color:#d8faff;
+  font-family:Consolas,monospace;padding:20px;
+}
+main{
+  max-width:650px;margin:25px auto;padding:24px;
+  border:1px solid #00d9ff;border-radius:16px;
+  background:#091522;box-shadow:0 0 25px #00d9ff20;
+}
+h1{color:#00eaff;text-align:center}
+h2{color:#73ffbd}
+p{line-height:1.7}
+.tag{color:#73ffbd}
+.terminal{
+  background:#020609;border:1px solid #23445a;
+  padding:16px;border-radius:10px;margin:16px 0;
+  overflow-wrap:anywhere;
+}
+input,textarea{
+  width:100%;padding:12px;margin:8px 0 14px;
+  background:#020609;color:#73ffbd;
+  border:1px solid #00d9ff;border-radius:7px;
+  font:inherit;
+}
+textarea{min-height:100px;resize:vertical}
+button{
+  background:#00d9ff;color:#001018;border:0;
+  border-radius:7px;padding:12px 16px;
+  font-weight:bold;cursor:pointer;margin:4px 0;
+}
+button:hover{background:#73ffbd}
+.hidden{display:none}
+#result{margin-top:18px;padding:16px;border-radius:10px}
+.success{border:1px solid #73ffbd;background:#10271f}
+.warning{color:#ffd479}
+footer{text-align:center;color:#7894a8;font-size:12px;margin-top:25px}
+</style>
+</head>
+<body>
+<main>
+  <p class="tag">● BINTANG.exe // FRIENDSHIP PROTOCOL</p>
+  <h1>🎂 BEST FRIEND CHALLENGE</h1>
+  <p style="text-align:center">
+    SPECIAL QUEST: BINTANG LEVEL 16<br>
+    <span class="tag">Can you prove you're the best friend?</span>
+  </p>
+
+  <div class="terminal">
+    <p>> Initializing friendship.exe...</p>
+    <p>> Birthday detected: BINTANG</p>
+    <p>> Mission: Write one line of Python!</p>
+    <p class="warning">⚠ PRANK MODE: ENABLED 😂</p>
+  </div>
+
+  <h2>01 / Python Mini Challenge</h2>
+  <p>
+    Tulis kode Python yang menampilkan tulisan
+    <b>Happy Birthday Bintang!</b>
+  </p>
+  <p>Contoh format: <span class="tag">print("teks kamu")</span></p>
+
+  <label for="code">Your Python code:</label>
+  <input id="code" placeholder='print("Happy Birthday Bintang!")'
+         autocomplete="off" spellcheck="false">
+  <button onclick="checkCode()">▶ RUN CODE</button>
+
+  <div id="result" class="hidden"></div>
+
+  <section id="reward" class="hidden">
+    <h2>02 / Achievement Unlocked!</h2>
+    <div class="terminal success">
+      <h2>🏆 BEST FRIEND 4EVER</h2>
+      <p>Friendship status: LEGENDARY 💚</p>
+      <p>You've officially passed Bintang's birthday quest!</p>
+    </div>
+
+    <h2>03 / Leave a Birthday Message</h2>
+    <p>Tulis kata-kata terbaik buat Bintang di sini 👇</p>
+    <textarea id="message"
+      placeholder="Happy birthday, Bintang! Semoga..."></textarea>
+    <button onclick="saveMessage()">💌 FINISH QUEST</button>
+    <div id="final" class="hidden terminal success"></div>
+  </section>
+
+  <footer>
+    CYBER FRIENDSHIP LAB © 2026<br>
+    No accounts hacked. Only friendship upgraded. 🔐
+  </footer>
+</main>
+
+<script>
+function checkCode(){
+  const code = document.getElementById("code").value.trim();
+  const result = document.getElementById("result");
+  const reward = document.getElementById("reward");
+
+  // Menerima variasi kutip, tetapi memeriksa
+  // kode print dengan isi pesan yang tepat.
+  const match = code.match(
+    /^print\s*\(\s*(['"])Happy Birthday Bintang!\1\s*\)$/
+  );
+
+  result.className = "";
+  result.classList.remove("success");
+  result.classList.add("terminal");
+  result.classList.remove("hidden");
+
+  if(match){
+    result.classList.add("success");
+    result.innerHTML =
+      "<b>✓ CODE EXECUTED SUCCESSFULLY!</b>" +
+      "<p>Happy Birthday Bintang!</p>" +
+      "<p>Achievement unlocked. You're a real one! 🎉</p>";
+    reward.classList.remove("hidden");
+  }else{
+    result.innerHTML =
+      "<b>✗ SYNTAX ERROR!</b>" +
+      "<p>Coba lagi, bro! Pastikan teksnya tepat:</p>" +
+      "<code>print(\"Happy Birthday Bintang!\")</code>";
+    reward.classList.add("hidden");
+  }
+}
+
+function saveMessage(){
+  const msg = document.getElementById("message").value.trim();
+  const final = document.getElementById("final");
+
+  if(!msg){
+    alert("Bro, masa achievement tanpa ucapan? 😂");
+    return;
+  }
+
+  final.classList.remove("hidden");
+  final.innerHTML =
+    "<h2>💚 QUEST COMPLETED!</h2>" +
+    "<p>⚠ SYSTEM WARNING: Ucapan ultah terdeteksi! akun ml kamu akan di hack oleh bintang jika tidak mengirim pesan tersebut!</p>" +
+    "<p>Akun Mobile Legends kamu AMAN kok. Ini cuma prank! 😂</p>" +
+    "<p>Screenshot ucapanmu dan kirim ke Bintang, ya!</p>" +
+    "<p><b>YOUR MESSAGE:</b></p>";
+
+  const quote = document.createElement("p");
+  quote.textContent = msg;
+  final.appendChild(quote);
+
+  const btn = document.createElement("button");
+  btn.textContent = "📋 COPY UCAPAN";
+  btn.onclick = async () => {
+    try{
+      await navigator.clipboard.writeText(
+        "Untuk Bintang:\n" + msg
+      );
+      btn.textContent = "✓ COPIED!";
+    }catch(e){
+      alert("Screenshot ucapan ini dan kirim ke Bintang ya!");
+    }
+  };
+  final.appendChild(btn);
+  final.scrollIntoView({behavior:"smooth",block:"center"});
+}
+</script>
+</body>
+</html>
